@@ -1,0 +1,87 @@
+Things we can do to improve the solution:
+
+1. Outlier Detection
+	• This can be further improved	
+
+2. Feature Engineering
+
+2.1 Enhanced Time-Based Features
+	•	Add advanced temporal features, such as:
+	•	Lag features for 7, 14, 21 days.
+	•	Rolling statistics like median, variance, standard deviation, etc.
+	•	Cumulative sales over time.
+	•	Indicators for week of month, year-over-year trends, etc.
+
+2.2 Inventory Features
+	•	Use inventory data to create features like:
+	•	Days of inventory left.
+	•	Stock-out indicators (when inventory = 0).
+	•	Ratios of inventory to sales (if possible).
+
+2.3 Calendar-Specific Features
+	•	Include specific event-related features:
+	•	Boolean columns for holidays, weekends, seasonal spikes (e.g., Black Friday).
+	•	Count of days since or until the next holiday.
+
+2.4 External Data
+	•	If allowed, integrate external data (weather, promotions, etc.) that may impact sales.
+	•	If not directly usable, try approximations like binary weather flags (rainy/sunny).
+
+3. Advanced Modeling Approaches
+
+3.1 Time Series Modeling
+	•	Explore advanced time-series methods:
+	•	ARIMA/SARIMA/SARIMAX models.
+	•	Prophet for seasonal trends.
+	•	**
+
+3.1. Time Series Modeling** (Continued)
+	•	ARIMA/SARIMA/SARIMAX for capturing seasonality and trends.
+	•	Prophet by Facebook, which handles seasonal patterns and holiday effects.
+	•	Vector AutoRegression (VAR) if modeling interactions between multiple products or stores.
+
+3.2 Machine Learning Models
+	•	Train models like:
+	•	Gradient Boosting Models (LightGBM, XGBoost, CatBoost): Perform well on tabular data.
+	•	Random Forests: For baseline comparison.
+	•	Neural Networks: Specifically Recurrent Neural Networks (RNNs) or Long Short-Term Memory (LSTM) for time-series data.
+	•	Use cross-validation schemes specific to time-series (e.g., expanding window or walk-forward validation) to avoid data leakage.
+
+3.3 Multi-Target Forecasting
+	•	Group IDs into clusters (e.g., similar sales trends) and use multi-task learning models.
+
+4. Feature Importance and Selection
+	•	Use feature importance plots (e.g., SHAP values for tree-based models) to understand the significance of your features.
+	•	Reduce features to only those that significantly improve accuracy, improving generalization.
+
+5. Regularization and Hyperparameter Optimization
+	•	Perform hyperparameter tuning using grid search, random search, or Bayesian optimization (e.g., Optuna).
+	•	Use regularization to avoid overfitting:
+	•	Ridge/Lasso regression for linear models.
+	•	Regularization parameters in gradient boosting frameworks.
+
+6. Validation Strategy
+	•	Ensure the validation approach mimics the real-world scenario. For example:
+	•	Instead of using the last 14 days for validation, try rolling validation (e.g., multiple smaller holdouts).
+	•	Align weights in validation (from test_weights) to match the test evaluation.
+
+7. Final Predictions and Ensembling
+	•	Combine multiple models using ensembling methods:
+	•	Simple averages of predictions from different models.
+	•	Stacking: Train a meta-model on predictions from base models.
+	•	Use different models for specific product clusters or categories.
+
+8. Post-Processing
+	•	Ensure predictions are consistent and logical:
+	•	Negative sales predictions should be set to 0.
+	•	Apply business logic to adjust forecasts for extreme cases (e.g., unusually high demand).
+
+9. Monitoring Performance
+	•	Regularly compare validation Weighted MAE with test results.
+	•	Investigate significant discrepancies to refine your model further.
+
+10. Tools and Techniques
+	•	Use efficient computation libraries like Dask or RAPIDS to speed up large-scale data processing.
+	•	Consider implementing incremental learning techniques if the data is too large to handle at once.
+
+Would you like detailed code snippets or explanations for implementing any of these suggestions?
